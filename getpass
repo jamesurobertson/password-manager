@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+const fs = require('fs')
+
+const { 2: username, 3: platform } = process.argv
+
+
+if (process.argv.length < 4) {
+  console.log('You must enter user name and platform')
+  console.log('Ex. getpass {username} {platform}')
+  return
+}
+
+passwordPath = '/home/james/Documents/programming/passwordGenerator/messages.txt'
+
+fs.readFile(passwordPath, 'utf8', (err, data) => {
+  if (err) throw error
+  const logs = data.split('\n')
+  logs.splice(logs.length - 1)
+
+  findPassword(logs, username, platform)
+})
+
+
+function findPassword(arr, username, platform) {
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].includes(username) && arr[i].includes(platform)) {
+      let passwordIndex = arr[i].indexOf('"password":')
+      console.log(`Password for ${username} on ${platform}: ${arr[i].slice(passwordIndex + 12, arr[i].length - 2)}`)
+      return
+    }
+  }
+
+  console.log('username not found on platform')
+  return
+}

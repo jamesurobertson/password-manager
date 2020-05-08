@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+const { Generate } = require('./generate')
+const fs = require('fs')
+
+const { 2: length, 3: platform, 4: username, 5: pool } = process.argv
+
+// TODO: make a way to delete last saved password / last line in passwords text.
+
+if (process.argv.length < 3) {
+  console.log('You must enter atleast the length of the password.')
+  console.log('Ex. makepass {length} {platform} {username} [{few} for fewer symbol pool]')
+  return
+}
+
+
+let password;
+if (pool === 'few') {
+  password = new Generate(length).fewSymbols()
+} else {
+  password = new Generate(length).allSymbols()
+}
+
+if (process.argv.length === 3) {
+  console.log(password)
+  return
+}
+
+const data = {
+  platform,
+  username,
+  password
+}
+
+passwordPath = '/home/james/Documents/programming/passwordGenerator/messages.txt'
+
+
+fs.appendFile(passwordPath, JSON.stringify(data) + '\n', (err) => {
+  if (err) throw err
+  console.log('Saved to pool')
+  console.log(`Password for ${username} on ${platform}: ${password}`)
+
+})
