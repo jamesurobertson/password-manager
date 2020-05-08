@@ -31,6 +31,7 @@ const data = {
   password
 }
 
+// change to your own path to where password files are saved
 passwordPath = '/home/james/Documents/programming/passwordGenerator/messages.txt'
 
 
