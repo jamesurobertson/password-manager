@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-const fs = require('fs')
-
+const db = require('./db/models')
 const { 2: username, 3: platform } = process.argv
 
 
@@ -9,16 +8,18 @@ if (process.argv.length < 4) {
   console.log('Ex. getpass {username} {platform}')
   return
 }
-// change to your own path to where password files are saved
-passwordPath = '/home/james/Documents/programming/passwordGenerator/messages.txt'
+// Convert VVVVVV to change to draw from databse instead of messages.txt
 
-fs.readFile(passwordPath, 'utf8', (err, data) => {
-  if (err) throw error
-  const logs = data.split('\n')
-  logs.splice(logs.length - 1)
+// passwordPath = '/home/james/Documents/programming/passwordGenerator/messages.txt'
 
-  findPassword(logs, username, platform)
-})
+// fs.readFile(passwordPath, 'utf8', (err, data) => {
+//   if (err) throw error
+//   const logs = data.split('\n')
+//   logs.splice(logs.length - 1)
+
+//   findPassword(logs, username, platform)
+// })
+
 
 
 function findPassword(arr, username, platform) {

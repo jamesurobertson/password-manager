@@ -1,0 +1,28 @@
+{
+  "name": "passwordGenerator",
+  "version": "1.0.0",
+  "description": "A command line password manager made with node.js",
+  "main": "makepass",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesurobertson/password-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesurobertson/password-manager/issues"
+  },
+  "homepage": "https://github.com/jamesurobertson/password-manager#readme",
+  "dependencies": {
+    "pg": "^8.1.0",
+    "sequelize": "^5.21.8"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^3.1.0",
+    "sequelize-cli": "^5.5.1"
+  }
+}
