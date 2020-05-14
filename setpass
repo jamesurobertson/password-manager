@@ -1,37 +1,16 @@
 #!/usr/bin/env node
+const { Entry, Platform, sequelize } = require('./db/models')
+const { 2: username, 3: platform, 4: password } = process.argv
 
-const { Generate } = require('./generate')
-const { Platform, Entry, sequelize } = require('./db/models')
-const bcrypt = require('bcrypt')
-
-
-const { 2: length, 3: platform, 4: username, 5: pool } = process.argv
-
-
-if (process.argv.length < 3) {
-  console.log('You must enter atleast the length of the password.')
-  console.log('Ex. makepass {length} {platform} {username} [{few} for fewer symbol pool]')
+if (process.argv.length < 5) {
+  console.log('You must enter user name, platform, and password')
+  console.log('Ex. setpass {username} {platform} {password}')
   return
 }
 
 
-let password;
-if (pool === 'few') {
-  password = new Generate(length).fewSymbols()
-} else {
-  password = new Generate(length).allSymbols()
-}
 
-if (process.argv.length === 3) {
-  console.log(password)
-  return
-} else if (process.argv.length === 4) {
-  console.log('You must supply a username for the platform')
-  console.log('Ex. makepass {length} {platform} {username} [{few} for fewer symbol pool]')
-  return
-}
-
-async function createEntry() {
+async function findEntry() {
 
   // check to see if username / platform combo is in database already
   let checkInDatabaseAlready = await Entry.findAll({
@@ -43,10 +22,9 @@ async function createEntry() {
   })
 
   if (checkInDatabaseAlready.length !== 0) {
-    console.log('Username and Platform already in database')
+    console.log('Username and Platform are already in database')
     return await sequelize.close()
   }
-
 
   // check to see if the platform is in the system
   let platformInput = await Platform.findAll({
@@ -80,8 +58,8 @@ async function createEntry() {
   console.log(`Password created for ${username} on ${platform}. Password: ${password}`)
 
 
-  return await sequelize.close()
-}
+    await sequelize.close()
 
+  }
 
-createEntry()
+  findEntry()

@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 const {Entry, Platform, sequelize } = require('./db/models')
-const { 2: username, 3: platform } = process.argv
+const { 2: username, 3: platform, 4: newPassword } = process.argv
 
-
-if (process.argv.length < 4) {
+if (process.argv.length < 5) {
   console.log('You must enter user name and platform')
-  console.log('Ex. getpass {username} {platform}')
+  console.log('Ex. updatepass {username} {platform} {newPassword}')
   return
 }
 
@@ -22,13 +21,22 @@ async function findEntry() {
     where: { username }
   })
 
-  if (checkInDatabaseAlready.length !== 0) {
-    console.log(`Password for ${username} on ${platform}: ${checkInDatabaseAlready[0].password}}`)
+  if (checkInDatabaseAlready.length === 0) {
+    console.log('Username and Platform are not in database')
     return await sequelize.close()
   }
 
-  console.log('Sorry, this username and platform not found')
-  return await sequelize.close()
+  const toUpdate = checkInDatabaseAlready[0]
+
+  await toUpdate.update({
+    username,
+    password: newPassword
+  })
+
+  console.log('Password updated!')
+
+  await sequelize.close()
+
 }
 
 findEntry()
