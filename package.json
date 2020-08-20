@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/jamesurobertson/password-manager#readme",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "pg": "^8.1.0",
     "sequelize": "^5.21.8"
   },
